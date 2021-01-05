@@ -21,7 +21,7 @@ import IconBathroom from "../svg/IconBathroom";
 import IconBedroom from "../svg/IconBedroom";
 import IconGarage from "../svg/IconGarage";
 import IconHome from "../svg/IconHome";
-import IconKitchen from "../svg/IconKitchen";
+
 import IconLivingroom from "../svg/IconLivingroom";
 import {Container, Drawer as MUIDrawer} from "@material-ui/core";
 import {
@@ -31,6 +31,8 @@ import {
 import Dashboard from "../pages/Dashboard";
 import Kitchen from "../pages/Kitchen";
 import Living from "../pages/Livingroom";
+import {ReactComponent as IconKitchen} from "../svg/kitchen.svg";
+
 
 const drawerWidth = 240;
 
@@ -94,23 +96,23 @@ function ResponsiveDrawer(props) {
 
         {
             text:"Kitchen",
-            icon: <IconKitchen style={{backgroundColor:"#DB2777"}}/>
+            icon: <IconKitchen  />
         },
         {
             text:"Living room",
-            icon: <IconLivingroom style={{color:"#111827"}}/>
+            icon: <IconLivingroom />
         },
         {
             text:"Bathroom",
-            icon: <IconBathroom style={{color:"#111827"}}/>
+            icon: <IconBathroom />
         },
         {
             text:"Bedroom",
-            icon: <IconBedroom style={{color:"#111827"}}/>
+            icon: <IconBedroom />
         },
         {
             text:"Garage",
-            icon: <IconGarage style={{color:"#111827"}}/>
+            icon: <IconGarage />
         },
     ];
 
@@ -142,7 +144,6 @@ function ResponsiveDrawer(props) {
                         <Link to={url} className={classes.link}>
                             <ListItem button key={text} onClick={()=>setTitle(text)}>
                                 { icon && <ListItemIcon>{icon}</ListItemIcon> }
-                                {/*<ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>*/}
                                 <ListItemText primary={ <Typography variant="h6" >
                                     {text}
                                 </Typography>} />

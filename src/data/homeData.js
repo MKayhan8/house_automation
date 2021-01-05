@@ -3,10 +3,11 @@ export default [
         roomName: "Kitchen",
         power: "35.8",
         lights: "open",
-        humidity: "28",
         temperature:"30",
+        stove:"close",
+        dishwasher:"close",
         curtains:
-            "open"
+            "close"
     },
     {
         roomName: "Living room",
@@ -14,8 +15,7 @@ export default [
         lights:
             "open",
         temperature:"18",
-        humidity:
-            "62",
+        tv:"open",
         curtains:
             "close"
     },
@@ -23,8 +23,8 @@ export default [
         roomName: "Bathroom",
         power: "18.0",
         lights: "close",
-        humidity: "10",
-        temperature:"18",
+        temperature:"13",
+        washingMachine:"open",
         curtains:
             "close"
     },
@@ -32,9 +32,8 @@ export default [
     {
         roomName: "Bedroom",
         power: "35.8",
-        lights: "open",
-        humidity: "28",
-        temperature:"30",
+        lights: "close",
+        temperature:"25",
         curtains:
             "open"
     },
@@ -42,8 +41,7 @@ export default [
         roomName: "Garage",
         power: "35.8",
         lights: "open",
-        humidity: "28",
-        temperature:"30",
+        temperature:"12",
         door:
             "open"
     },

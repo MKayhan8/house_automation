@@ -1,104 +1,227 @@
-import React from 'react';
-import { makeStyles } from "@material-ui/core/styles"
-import Dashboard from "../pages/Dashboard";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import MailIcon from '@material-ui/icons/Mail';
+import MenuIcon from '@material-ui/icons/Menu';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import HomeIcon from "@material-ui/icons/Home";
+import IconBathroom from "../svg/IconBathroom";
+import IconBedroom from "../svg/IconBedroom";
+import IconGarage from "../svg/IconGarage";
+import IconHome from "../svg/IconHome";
+
+import IconLivingroom from "../svg/IconLivingroom";
+import {Container, Drawer as MUIDrawer} from "@material-ui/core";
 import {
     BrowserRouter as Router,
     Switch, Route, Link
 } from "react-router-dom";
+import Dashboard from "../pages/Dashboard";
+import Kitchen from "../pages/Kitchen";
+import Living from "../pages/Livingroom";
+import {ReactComponent as IconKitchen} from "../svg/kitchen.svg";
 
-import {
-    Drawer as MUIDrawer, List, ListItem,
-    ListItemIcon, ListItemText,
-    Container, Typography,Divider
-} from "@material-ui/core";
 
-import HomeIcon from "@material-ui/icons/Home";
-import InfoIcon from '@material-ui/icons/Info';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-    drawerPaper: { width: 'inherit' , backgroundColor:"#f5f5f5"},
+    root: {
+        display: 'flex',
+    },
+    drawer: {
+        [theme.breakpoints.up('sm')]: {
+            width: drawerWidth,
+            flexShrink: 0,
+
+        },
+    },
+    appBar: {
+        [theme.breakpoints.up('sm')]: {
+            width: `calc(100% - ${drawerWidth}px)`,
+            marginLeft: drawerWidth,
+            backgroundColor:"#fff"
+        },
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+        [theme.breakpoints.up('sm')]: {
+            display: 'none',
+        },
+        color:"#111827"
+    },
+    // necessary for content to be below app bar
+    toolbar: theme.mixins.toolbar,
+    drawerPaper: {
+        width: drawerWidth,
+        backgroundColor:theme.primary,
+
+    },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+    },
     link: {
         textDecoration: 'none',
-        color: theme.palette.text.primary,
-        fontWeight:"bold"
+        //color: theme.palette.text.primary,
+        fontWeight:"bold",
+        color:"#111827"
     }
-}))
 
-function Drawer() {
+}));
+
+function ResponsiveDrawer(props) {
+    const { window } = props;
     const classes = useStyles();
+    const theme = useTheme();
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [title, setTitle] = useState("Dashboard");
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
+
     const itemsList = [
 
         {
             text:"Kitchen",
-            icon: <HomeIcon/>
+            icon: <IconKitchen  />
         },
         {
             text:"Living room",
-            icon: <HomeIcon/>
+            icon: <IconLivingroom />
         },
         {
             text:"Bathroom",
-            icon: <HomeIcon/>
+            icon: <IconBathroom />
         },
         {
             text:"Bedroom",
-            icon: <HomeIcon/>
+            icon: <IconBedroom />
         },
         {
             text:"Garage",
-            icon: <HomeIcon/>
+            icon: <IconGarage />
         },
     ];
-    return (
-        <Router>
-            <div style={{ display: 'flex' }}>
-                <MUIDrawer
-                    style={{ width: '250px' }}
-                    variant="persistent"
-                    anchor="left"
-                    open={true}
 
-                    classes={{ paper: classes.drawerPaper }}
-                >
-                    <List>
-                        <Link to="/" className={classes.link}>
-                            <ListItem button>
-                                <ListItemIcon>
-                                    <HomeIcon />
-                                </ListItemIcon>
-                                <ListItemText primary={<Typography variant="h5" >
-                                    Dashboard
-                                </Typography>}  />
+    const drawer = (
+
+        <div>
+            <div className={classes.toolbar} />
+
+            <List>
+                <Link to="/" className={classes.link}>
+                    <ListItem button onClick={()=>setTitle("Dashboard")}>
+                        <ListItemIcon>
+                            <IconHome />
+                        </ListItemIcon>
+                        <ListItemText primary={<Typography variant="h5" >
+                            Dashboard
+                        </Typography>}  />
+                    </ListItem>
+                </Link>
+
+
+                <Divider />
+                {itemsList.map((item, index) => {
+
+                    const {text,icon} = item
+                    let url = '/' + text.toLowerCase()
+                    url = url.replace(/\s/g, '');
+                    return(
+                        <Link to={url} className={classes.link}>
+                            <ListItem button key={text} onClick={()=>setTitle(text)}>
+                                { icon && <ListItemIcon>{icon}</ListItemIcon> }
+                                <ListItemText primary={ <Typography variant="h6" >
+                                    {text}
+                                </Typography>} />
                             </ListItem>
                         </Link>
+                    )}
+
+                )}
+            </List>
+        </div>
+
+    );
 
 
-                        <Divider />
-                        {itemsList.map((item, index) => {
+    const container = window !== undefined ? () => window().document.body : undefined;
 
-                            const {text,icon} = item
-                            let url = '/' + text.toLowerCase()
+    return (
+        <Router>
 
-                            return(
-                                <Link to={url} className={classes.link}>
-                                <ListItem button key={text}>
-                                    { icon && <ListItemIcon>{icon}</ListItemIcon> }
-                                    {/*<ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>*/}
-                                    <ListItemText primary={ <Typography variant="h6" >
-                                        {text}
-                                    </Typography>} />
-                                </ListItem>
-                                </Link>
-                            )}
 
-                        )}
-                    </List>
-
-                </MUIDrawer>
+            <div className={classes.root}>
+                <CssBaseline />
+                <AppBar position="fixed" className={classes.appBar}>
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            edge="start"
+                            onClick={handleDrawerToggle}
+                            className={classes.menuButton}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" noWrap style={{color:"#111827"}}>
+                            {title}
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <nav className={classes.drawer} aria-label="mailbox folders">
+                    {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+                    <Hidden smUp implementation="css">
+                        <Drawer
+                            container={container}
+                            variant="temporary"
+                            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                            open={mobileOpen}
+                            onClose={handleDrawerToggle}
+                            classes={{
+                                paper: classes.drawerPaper,
+                            }}
+                            ModalProps={{
+                                keepMounted: true, // Better open performance on mobile.
+                            }}
+                        >
+                            {drawer}
+                        </Drawer>
+                    </Hidden>
+                    <Hidden xsDown implementation="css">
+                        <Drawer
+                            classes={{
+                                paper: classes.drawerPaper,
+                            }}
+                            variant="permanent"
+                            open
+                        >
+                            {drawer}
+                        </Drawer>
+                    </Hidden>
+                </nav>
                 <Switch>
                     <Route exact path="/">
-                       <Dashboard/>
+                        <Dashboard/>
+                    </Route>
+                    <Route exact path="/kitchen">
+                        <Kitchen/>
+                    </Route>
+                    <Route exact path="/livingroom">
+                        <Living/>
                     </Route>
                     <Route exact path="/bedroom">
                         <Container>
@@ -110,10 +233,19 @@ function Drawer() {
                             </Typography>
                         </Container>
                     </Route>
+
                 </Switch>
             </div>
         </Router>
     );
 }
 
-export default Drawer;
+ResponsiveDrawer.propTypes = {
+    /**
+     * Injected by the documentation to work in an iframe.
+     * You won't need it on your project.
+     */
+    window: PropTypes.func,
+};
+
+export default ResponsiveDrawer;
