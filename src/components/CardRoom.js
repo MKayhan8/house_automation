@@ -8,13 +8,14 @@ import Typography from '@material-ui/core/Typography';
 import {
     Grid, Slider, Switch
 } from "@material-ui/core";
-import {IconTemperature, IconLampOpen, IconLampClose,  IconGarage } from "../svg/Icons";
-import { ReactComponent as IconCurtains } from '../svg/windows.svg';
-import { ReactComponent as IconWashingMachine } from '../svg/washing-machine.svg';
-import { ReactComponent as IconStove } from '../svg/oven.svg';
-import { ReactComponent as IconDishwasher } from '../svg/dishwasher.svg';
-import { ReactComponent as IconTv } from '../svg/tv.svg';
+import {IconTemperature, IconLampOpen, IconLampClose, IconGarage} from "../svg/Icons";
+import {ReactComponent as IconCurtains} from '../svg/windows.svg';
+import {ReactComponent as IconWashingMachine} from '../svg/washing-machine.svg';
+import {ReactComponent as IconStove} from '../svg/oven.svg';
+import {ReactComponent as IconDishwasher} from '../svg/dishwasher.svg';
+import {ReactComponent as IconTv} from '../svg/tv.svg';
 import IconBathroom from "../svg/IconBathroom";
+
 const useStyles = makeStyles((theme) => ({
     div: {
         [theme.breakpoints.down('md')]: {
@@ -43,18 +44,18 @@ const CardRoom = (props) => {
     }
 
     const classes = useStyles();
-    const {roomName, power, lights, humidity, temperature, curtains, door,dishwasher,stove,washingMachine,tv} = props
+    const {roomName, power, lights, humidity, temperature, curtains, door, dishwasher, stove, washingMachine, tv} = props
     const [celcius, setCelcius] = useState(temperature)
-    const [stateLights, setStatelights] = useState(lights === "open" ? true : false)
-    const [stateCurtains, setStateCurtains] = useState(curtains === "open" ? true : false)
-    const [stateGarageDoor, setStateGarageDoor] = useState(door === "open" ? true : false)
-    const [stateDishWasher, setStateDishWasher] = useState(dishwasher === "open" ? true : false)
-    const [stateStove, setStateStove] = useState(stove === "open" ? true : false)
-    const [stateWashingMachine, setStateWashingMachine] = useState(washingMachine === "open" ? true : false)
-    const [stateTv, setStateTv] = useState(tv === "open" ? true : false)
+    const [stateLights, setStatelights] = useState(lights === "open")
+    const [stateCurtains, setStateCurtains] = useState(curtains === "open")
+    const [stateGarageDoor, setStateGarageDoor] = useState(door === "open")
+    const [stateDishWasher, setStateDishWasher] = useState(dishwasher === "open")
+    const [stateStove, setStateStove] = useState(stove === "open")
+    const [stateWashingMachine, setStateWashingMachine] = useState(washingMachine === "open")
+    const [stateTv, setStateTv] = useState(tv === "open")
     return (
 
-        <Card>
+        <Card style={{height:"100%"}}>
             <CardHeader
                 titleTypographyProps={{variant: 'h5'}}
                 title={roomName}
@@ -73,7 +74,7 @@ const CardRoom = (props) => {
 
                                     <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                        <IconTemperature />
+                                        <IconTemperature/>
 
                                     </Grid>
                                     <Grid item xs={2} sm={2} md={2} lg={2}>
@@ -118,8 +119,8 @@ const CardRoom = (props) => {
                                     <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
                                         <Typography component="div">
                                             <Grid component="label" container alignItems="center" spacing={1}>
-                                                <Grid item >Lights</Grid>
-                                                <Grid item >
+                                                <Grid item>Lights</Grid>
+                                                <Grid item>
                                                     <Switch
                                                         checked={stateLights}
                                                         onChange={() => setStatelights(!stateLights)}
@@ -148,16 +149,17 @@ const CardRoom = (props) => {
 
                                     <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                        {stateDishWasher ? <IconDishwasher  fill='#3B82F6' stroke='#000'/> : <IconDishwasher/>}
+                                        {stateDishWasher ? <IconDishwasher fill='#3B82F6' stroke='#000'/> :
+                                            <IconDishwasher/>}
 
                                     </Grid>
                                     <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
                                         <Typography component="div">
                                             <Grid component="label" container alignItems="center" spacing={1}>
-                                                <Grid item > <Typography component="div">
+                                                <Grid item> <Typography component="div">
                                                     Dishwasher
                                                 </Typography></Grid>
-                                                <Grid item >
+                                                <Grid item>
                                                     <Switch
                                                         checked={stateDishWasher}
                                                         onChange={() => setStateDishWasher(!stateDishWasher)}
@@ -186,16 +188,16 @@ const CardRoom = (props) => {
 
                                     <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                        {stateStove ? <IconStove  fill='#3B82F6' stroke='#000'/> : <IconStove/>}
+                                        {stateStove ? <IconStove fill='#3B82F6' stroke='#000'/> : <IconStove/>}
 
                                     </Grid>
                                     <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
                                         <Typography component="div">
                                             <Grid component="label" container alignItems="center" spacing={1}>
-                                                <Grid item > <Typography component="div">
+                                                <Grid item> <Typography component="div">
                                                     Stove
                                                 </Typography></Grid>
-                                                <Grid item >
+                                                <Grid item>
                                                     <Switch
                                                         checked={stateStove}
                                                         onChange={() => setStateStove(!stateStove)}
@@ -224,16 +226,17 @@ const CardRoom = (props) => {
 
                                     <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                        {stateWashingMachine ? <IconWashingMachine  fill='#3B82F6' stroke='#000'/> : <IconWashingMachine/>}
+                                        {stateWashingMachine ? <IconWashingMachine fill='#3B82F6' stroke='#000'/> :
+                                            <IconWashingMachine/>}
 
                                     </Grid>
                                     <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
                                         <Typography component="div">
                                             <Grid component="label" container alignItems="center" spacing={1}>
-                                                <Grid item > <Typography component="div"  >
+                                                <Grid item> <Typography component="div">
                                                     Washing Machine
                                                 </Typography></Grid>
-                                                <Grid item >
+                                                <Grid item>
                                                     <Switch
                                                         checked={stateWashingMachine}
                                                         onChange={() => setStateWashingMachine(!stateWashingMachine)}
@@ -262,16 +265,16 @@ const CardRoom = (props) => {
 
                                     <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                        {stateTv ? <IconTv  fill='#3B82F6' stroke='#000'/> : <IconTv/>}
+                                        {stateTv ? <IconTv fill='#3B82F6' stroke='#000'/> : <IconTv/>}
 
                                     </Grid>
                                     <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
                                         <Typography component="div">
                                             <Grid component="label" container alignItems="center" spacing={1}>
-                                                <Grid item > <Typography component="div"  >
+                                                <Grid item> <Typography component="div">
                                                     Tv
                                                 </Typography></Grid>
-                                                <Grid item >
+                                                <Grid item>
                                                     <Switch
                                                         checked={stateTv}
                                                         onChange={() => setStateTv(!stateTv)}
@@ -300,16 +303,16 @@ const CardRoom = (props) => {
 
                                     <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                        {stateCurtains ? <IconCurtains  fill='#3B82F6' stroke='#000'/> : <IconCurtains/>}
+                                        {stateCurtains ? <IconCurtains fill='#3B82F6' stroke='#000'/> : <IconCurtains/>}
 
                                     </Grid>
                                     <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
                                         <Typography component="div">
                                             <Grid component="label" container alignItems="center" spacing={1}>
-                                                <Grid item > <Typography component="div">
+                                                <Grid item> <Typography component="div">
                                                     Curtains
                                                 </Typography></Grid>
-                                                <Grid item >
+                                                <Grid item>
                                                     <Switch
                                                         checked={stateCurtains}
                                                         onChange={() => setStateCurtains(!stateCurtains)}

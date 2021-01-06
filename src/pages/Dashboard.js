@@ -4,15 +4,12 @@ import {
 } from "@material-ui/core";
 
 import Rooms from "../components/Rooms";
-
-
-import { makeStyles } from "@material-ui/core/styles"
-import Header from "../components/Header";
+import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
    div:{
        [theme.breakpoints.down('md')]: {
-           marginLeft:9,
-           marginRight:9
+           marginLeft:10,
+           marginRight:10
 
        },
        backgroundColor:"#e0e0e0",

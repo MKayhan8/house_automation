@@ -1,47 +1,52 @@
 export default [
     {
         roomName: "Kitchen",
-        power: "35.8",
+        powerWeekly: [310, 120, 80, 170, 130, 312, 185],
         lights: "open",
-        temperature:"30",
-        stove:"close",
-        dishwasher:"close",
+        temperature: 30,
+        temperatureWeekly: [21, 12, 28, 17, 23, 21, 18],
+        stove: "close",
+        dishwasher: "close",
         curtains:
             "close"
     },
     {
         roomName: "Living room",
-        power: "21.7",
+        powerWeekly: [120, 340, 823, 170, 420, 522, 485],
         lights:
             "open",
-        temperature:"18",
-        tv:"open",
+        temperature: 18,
+        temperatureWeekly: [11, 15, 23, 12, 25, 31, 28],
+        tv: "open",
         curtains:
             "close"
     },
     {
         roomName: "Bathroom",
-        power: "18.0",
+        powerWeekly: [123, 434, 234, 657, 565, 234, 556],
         lights: "close",
-        temperature:"13",
-        washingMachine:"open",
+        temperature: 13,
+        temperatureWeekly: [12, 34, 28, 23, 29, 31, 18],
+        washingMachine: "open",
         curtains:
             "close"
     },
 
     {
         roomName: "Bedroom",
-        power: "35.8",
+        powerWeekly: [234, 123, 398, 178, 167, 289, 478],
         lights: "close",
-        temperature:"25",
+        temperature: 25,
+        temperatureWeekly: [21, 13, 17, 15, 18, 21, 19],
         curtains:
             "open"
     },
     {
         roomName: "Garage",
-        power: "35.8",
+        powerWeekly: [47, 38, 50, 83, 67, 78, 98],
         lights: "open",
-        temperature:"12",
+        temperature: 12,
+        temperatureWeekly: [12, 12, 15, 12, 13, 17, 19],
         door:
             "open"
     },

@@ -1,81 +1,54 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-    Container,
-    Grid,
+    Grid, Card, CardContent
 } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
 
-
-
-
-const useStyles = makeStyles({
-
+import homeData from "../data/homeData";
+import { makeStyles } from "@material-ui/core/styles"
+import GraphContainer from "../components/GraphContainer";
+const useStyles = makeStyles((theme) => ({
     div:{
+        [theme.breakpoints.down('md')]: {
+            marginLeft:10,
+            marginRight:10
+
+        },
         backgroundColor:"#e0e0e0",
-        marginTop:"50px"
+        marginTop:"50px",
+        width: '100vw',
+        height: '100vh',
 
     },
     container:{
-        marginTop:"40px"
-    }
-});
+        marginTop:"40px",
+    },
 
-function valuetext(value) {
-    return `${value}°C`;
-}
-
-const Living = () => {
+}));
+const LivingRoom = () => {
     const classes = useStyles();
+    let obj = homeData.find(v=> v.roomName ==="Living room")
+    const{powerWeekly,temperatureWeekly} = obj
+    let data_array = [powerWeekly,temperatureWeekly]
+    let label_array = ["Daily Expended Electricity Graph","Daily Average Temperature Graph"]
+    let color_array =["#2196f3","#f50057"]
+    let unit_array =["Kwh","°C"]
+
+
     return (
 
-
-
+        <>
             <div className={classes.div}>
-                <Grid container direction="column">
+                <Grid container direction="column" className={classes.mainContainer} >
 
-                    <Grid item container className={classes.container}>
-
-                        <Grid item xs={12} sm={8} md={8}>
-                            <Typography id="discrete-slider" gutterBottom>
-                                Temperature
-                            </Typography>
-                            <Slider
-                                defaultValue={30}
-                                getAriaValueText={valuetext}
-                                aria-labelledby="discrete-slider"
-                                valueLabelDisplay="auto"
-                                step={10}
-                                marks
-                                min={10}
-                                max={110}
-                            />
-                            <Typography id="discrete-slider" gutterBottom>
-                                Disabled
-                            </Typography>
-                            <Slider
-                                defaultValue={30}
-                                getAriaValueText={valuetext}
-                                aria-labelledby="discrete-slider"
-                                valueLabelDisplay="auto"
-                                step={10}
-                                marks
-                                min={10}
-                                max={110}
-                                disabled
-                            />
-                        </Grid>
-
+                    <Grid item container   className={classes.container} spacing={2}>
+                        <GraphContainer data_array={data_array} label_array={label_array} color_array={color_array} unit_array={unit_array}/>
                     </Grid>
-
                 </Grid>
             </div>
 
+        </>
 
+    );
+}
 
-
-    )
-};
-
-export default Living;
+export default LivingRoom;

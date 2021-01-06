@@ -11,19 +11,16 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import HomeIcon from "@material-ui/icons/Home";
 import IconBathroom from "../svg/IconBathroom";
 import IconBedroom from "../svg/IconBedroom";
 import IconGarage from "../svg/IconGarage";
 import IconHome from "../svg/IconHome";
 
 import IconLivingroom from "../svg/IconLivingroom";
-import {Container, Drawer as MUIDrawer} from "@material-ui/core";
 import {
     BrowserRouter as Router,
     Switch, Route, Link
@@ -32,6 +29,9 @@ import Dashboard from "../pages/Dashboard";
 import Kitchen from "../pages/Kitchen";
 import Living from "../pages/Livingroom";
 import {ReactComponent as IconKitchen} from "../svg/kitchen.svg";
+import Bathroom from "../pages/Bathroom";
+import Bedroom from "../pages/Bedroom";
+import Garage from "../pages/Garage";
 
 
 const drawerWidth = 240;
@@ -135,7 +135,7 @@ function ResponsiveDrawer(props) {
 
 
                 <Divider />
-                {itemsList.map((item, index) => {
+                {itemsList?.map((item, index) => {
 
                     const {text,icon} = item
                     let url = '/' + text.toLowerCase()
@@ -183,7 +183,6 @@ function ResponsiveDrawer(props) {
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer} aria-label="mailbox folders">
-                    {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
                     <Hidden smUp implementation="css">
                         <Drawer
                             container={container}
@@ -223,17 +222,15 @@ function ResponsiveDrawer(props) {
                     <Route exact path="/livingroom">
                         <Living/>
                     </Route>
-                    <Route exact path="/bedroom">
-                        <Container>
-                            <Typography variant="h3" gutterBottom>
-                                Bedroom
-                            </Typography>
-                            <Typography variant="body1" gutterBottom>
-                                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                            </Typography>
-                        </Container>
+                    <Route exact path="/bathroom">
+                        <Bathroom/>
                     </Route>
-
+                    <Route exact path="/bedroom">
+                       <Bedroom/>
+                    </Route>
+                    <Route exact path="/garage">
+                        <Garage/>
+                    </Route>
                 </Switch>
             </div>
         </Router>
@@ -241,10 +238,6 @@ function ResponsiveDrawer(props) {
 }
 
 ResponsiveDrawer.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
     window: PropTypes.func,
 };
 

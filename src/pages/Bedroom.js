@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
-    Grid, Card, CardContent
+    Grid,
 } from "@material-ui/core";
 
 import homeData from "../data/homeData";
@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
     },
 
 }));
-const Kitchen = () => {
+const Bedroom = () => {
     const classes = useStyles();
-    let obj = homeData.find(v => v.roomName === "Kitchen")
+    let obj = homeData.find(v => v.roomName === "Bedroom")
     const {powerWeekly, temperatureWeekly} = obj;
     let data_array = [powerWeekly, temperatureWeekly]
     let label_array = ["Daily Expended Electricity Graph", "Daily Average Temperature Graph"]
@@ -55,4 +55,4 @@ const Kitchen = () => {
     );
 }
 
-export default Kitchen;
+export default Bedroom;
