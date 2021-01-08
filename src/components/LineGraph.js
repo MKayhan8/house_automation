@@ -6,6 +6,7 @@ import {Line} from "react-chartjs-2";
 
 const  LineGraph =(props) => {
 
+
     const [chartData,setChartData] = useState({})
     const chart =  ()=>{
         setChartData({

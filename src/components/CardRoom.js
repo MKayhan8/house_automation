@@ -14,7 +14,7 @@ import {ReactComponent as IconWashingMachine} from '../svg/washing-machine.svg';
 import {ReactComponent as IconStove} from '../svg/oven.svg';
 import {ReactComponent as IconDishwasher} from '../svg/dishwasher.svg';
 import {ReactComponent as IconTv} from '../svg/tv.svg';
-import IconBathroom from "../svg/IconBathroom";
+
 
 const useStyles = makeStyles((theme) => ({
     div: {
@@ -44,7 +44,7 @@ const CardRoom = (props) => {
     }
 
     const classes = useStyles();
-    const {roomName, power, lights, humidity, temperature, curtains, door, dishwasher, stove, washingMachine, tv} = props
+    const {roomName, lights, temperature, curtains, door, dishwasher, stove, washingMachine, tv} = props
     const [celcius, setCelcius] = useState(temperature)
     const [stateLights, setStatelights] = useState(lights === "open")
     const [stateCurtains, setStateCurtains] = useState(curtains === "open")
@@ -55,7 +55,7 @@ const CardRoom = (props) => {
     const [stateTv, setStateTv] = useState(tv === "open")
     return (
 
-        <Card style={{height:"100%"}}>
+        <Card style={{height: "100%"}}>
             <CardHeader
                 titleTypographyProps={{variant: 'h5'}}
                 title={roomName}
@@ -65,9 +65,9 @@ const CardRoom = (props) => {
             <CardContent>
                 <Grid container direction="column" className={classes.mainContainer}>
 
-                    <Grid item container className={classes.container}>
+                    <Grid  item container  className={classes.container}>
 
-                        <Grid container direction="row">
+                        <Grid container direction="row" >
                             <Grid item container xs={12} sm={12} md={12} lg={12}>
 
                                 <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
@@ -106,7 +106,7 @@ const CardRoom = (props) => {
 
                         </Grid>
 
-                        <Grid container direction="row">
+                        <Grid container direction="row" style={{paddingTop:"10px"}}>
                             <Grid item container xs={12} sm={12} md={12} lg={12}>
 
                                 <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
@@ -142,7 +142,7 @@ const CardRoom = (props) => {
 
 
                         </Grid>
-                        {dishwasher === "open" || dishwasher === "close" ? (<Grid container direction="row">
+                        {dishwasher === "open" || dishwasher === "close" ? (<Grid container direction="row" style={{paddingTop:"12px"}}>
                             <Grid item container xs={12} sm={12} md={12} lg={12}>
 
                                 <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
@@ -181,7 +181,7 @@ const CardRoom = (props) => {
 
 
                         </Grid>) : null}
-                        {stove === "open" || stove === "close" ? (<Grid container direction="row">
+                        {stove === "open" || stove === "close" ? (<Grid container direction="row" style={{paddingTop:"12px"}}>
                             <Grid item container xs={12} sm={12} md={12} lg={12}>
 
                                 <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
@@ -219,7 +219,7 @@ const CardRoom = (props) => {
 
 
                         </Grid>) : null}
-                        {washingMachine === "open" || washingMachine === "close" ? (<Grid container direction="row">
+                        {washingMachine === "open" || washingMachine === "close" ? (<Grid container direction="row" style={{paddingTop:"12px"}}>
                             <Grid item container xs={12} sm={12} md={12} lg={12}>
 
                                 <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
@@ -258,7 +258,7 @@ const CardRoom = (props) => {
 
 
                         </Grid>) : null}
-                        {tv === "open" || tv === "close" ? (<Grid container direction="row">
+                        {tv === "open" || tv === "close" ? (<Grid container direction="row" style={{paddingTop:"12px"}}>
                             <Grid item container xs={12} sm={12} md={12} lg={12}>
 
                                 <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
@@ -296,7 +296,7 @@ const CardRoom = (props) => {
 
 
                         </Grid>) : null}
-                        {curtains === "open" || curtains === "close" ? (<Grid container direction="row">
+                        {curtains === "open" || curtains === "close" ? (<Grid container direction="row" style={{paddingTop:"12px"}}>
                             <Grid item container xs={12} sm={12} md={12} lg={12}>
 
                                 <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
@@ -334,7 +334,7 @@ const CardRoom = (props) => {
 
 
                         </Grid>) : null}
-                        {door === "open" || door === "close" ? (<Grid container direction="row">
+                        {door === "open" || door === "close" ? (<Grid container direction="row" style={{paddingTop:"12px"}}>
                             <Grid item container xs={12} sm={12} md={12} lg={12}>
 
                                 <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
