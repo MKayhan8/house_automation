@@ -16,7 +16,7 @@ The aim of the project is to control and monitor different devices in different 
 * [cross-env](https://github.com/kentcdodds/cross-env) _for testing project different browsers_                     
 ## Usage
 
-**Before installing and running this repo, go to [house_automation_api](https://github.com/MKayhan8/house_automation_api) and run it. This is the RESTful API for the house automation project I develop with [express.js](https://expressjs.com/) with get and patch methods. It listens [http://localhost:9000](http://localhost:9000)\
+**Before installing and running this repo, go to [house_automation_api](https://github.com/MKayhan8/house_automation_api) and run it. This is the RESTful API for the house automation project I develop with [express.js](https://expressjs.com/) with `get` and `patch` methods. It listens [http://localhost:9000](http://localhost:9000)\
  _Then you can continue install and start house simulation._**
 
 * `npm install` 
