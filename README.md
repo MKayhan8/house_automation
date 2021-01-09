@@ -10,10 +10,11 @@ The aim of the project is to control and monitor different devices in different 
 ## Libraries and Tools
 * [React Hooks](https://reactjs.org/docs/hooks-intro.html) _For state management between pages_
 * [React Router](https://reactrouter.com/web/guides/quick-start)  _For transitions between pages_
+* [Material UI](https://material-ui.com/) _Faster design with components already prepared_
 * [axios](https://github.com/axios/axios), _Promise based HTTP client for the browser and node.js_ 
 * [chart.js](https://www.chartjs.org/) _Simple yet flexible JavaScript charting for designers & developers_
 * [react-chartjs-2](https://github.com/reactchartjs/react-chartjs-2)  _React wrapper for chart.js 2_  
-* [cross-env](https://github.com/kentcdodds/cross-env) _for testing project different browsers_                     
+* [cross-env](https://github.com/kentcdodds/cross-env) _For testing project different browsers_                     
 ## Usage
 
 **Before installing and running this repo, go to [house_automation_api](https://github.com/MKayhan8/house_automation_api) and run it. This is the RESTful API for the house automation project I develop with [express.js](https://expressjs.com/) with `get` and `patch` methods. It listens [http://localhost:9000](http://localhost:9000)\
