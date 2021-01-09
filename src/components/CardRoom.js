@@ -49,7 +49,7 @@ const CardRoom = (props) => {
         let dataObjToUpdate = {}
         switch (roomItem) {
             case "temperature":
-                updateTemperature(roomName,celcius)
+                updateTemperature(roomName, celcius)
                 break;
             case "lights":
                 value = stateLights ? "close" : "open"
@@ -113,10 +113,10 @@ const CardRoom = (props) => {
         })
     }
 
-    const updateTemperature = async (roomName,value)=>{
-       await axios.patch("http://localhost:9000/rooms?roomName="+roomName,{temperature:value}).then((res)=>{
-           setCelcius(value)
-        }).catch((e)=>{
+    const updateTemperature = async (roomName, value) => {
+        await axios.patch("http://localhost:9000/rooms?roomName=" + roomName, {temperature: value}).then((res) => {
+            setCelcius(value)
+        }).catch((e) => {
             alert(e)
         })
     }
@@ -172,8 +172,7 @@ const CardRoom = (props) => {
                                             min={0}
                                             max={50}
                                             style={{textColor: "#fff"}}
-                                            onChangeCommitted={(event,value) =>updateRoomItems(roomName,"temperature") }
-
+                                            onChangeCommitted={(event, value) => updateRoomItems(roomName, "temperature")}
 
 
                                         />
