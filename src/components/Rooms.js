@@ -19,7 +19,7 @@ const Rooms = () => {
     const classes = useStyles();
 
     const getApiData = async () => {
-        await axios.get("http://localhost:3000/rooms").then(res => {
+        await axios.get("http://localhost:9000/rooms").then(res => {
             setHomeData(res.data)
             setLoading(false)
         }).catch(err => {

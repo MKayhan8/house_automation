@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import axios from "axios";
 
 import {
     Grid, Slider, Switch
@@ -43,6 +44,83 @@ const CardRoom = (props) => {
         return `${value}°C`;
     }
 
+    const updateRoomItems = async (roomName, roomItem) => {
+        let value;
+        let dataObjToUpdate = {}
+        switch (roomItem) {
+            case "temperature":
+                updateTemperature(roomName,celcius)
+                break;
+            case "lights":
+                value = stateLights ? "close" : "open"
+                dataObjToUpdate = {lights: value}
+                break;
+            case "stove":
+                value = stateStove ? "close" : "open"
+                dataObjToUpdate = {stove: value}
+                break;
+            case "dishwasher":
+                value = stateDishWasher ? "close" : "open"
+                dataObjToUpdate = {dishwasher: value}
+                break;
+            case "curtains":
+                value = stateCurtains ? "close" : "open"
+                dataObjToUpdate = {curtains: value}
+                break;
+            case "washingMachine":
+                value = stateWashingMachine ? "close" : "open"
+                dataObjToUpdate = {washingMachine: value}
+                break;
+            case "door":
+                value = stateGarageDoor ? "close" : "open"
+                dataObjToUpdate = {door: value}
+                break;
+            case "tv":
+                value = stateTv ? "close" : "open"
+                dataObjToUpdate = {tv: value}
+                break;
+            default:
+            // code block
+        }
+        await axios.patch("http://localhost:9000/rooms?roomName=" + roomName, dataObjToUpdate).then((res) => {
+            switch (roomItem) {
+                case "lights":
+                    setStatelights(!stateLights)
+                    break;
+                case "stove":
+                    setStateStove(!stateStove)
+                    break;
+                case "dishwasher":
+                    setStateDishWasher(!stateDishWasher)
+                    break;
+                case "curtains":
+                    setStateCurtains(!stateCurtains)
+                    break;
+                case "washingMachine":
+                    setStateWashingMachine(!stateWashingMachine)
+                    break;
+                case "door":
+                    setStateGarageDoor(!stateGarageDoor)
+                    break;
+                case "tv":
+                    setStateTv(!stateTv)
+                    break;
+                default:
+                // code block
+            }
+        }).catch((e) => {
+            alert(e)
+        })
+    }
+
+    const updateTemperature = async (roomName,value)=>{
+       await axios.patch("http://localhost:9000/rooms?roomName="+roomName,{temperature:value}).then((res)=>{
+           setCelcius(value)
+        }).catch((e)=>{
+            alert(e)
+        })
+    }
+
     const classes = useStyles();
     const {roomName, lights, temperature, curtains, door, dishwasher, stove, washingMachine, tv} = props
     const [celcius, setCelcius] = useState(temperature)
@@ -65,16 +143,17 @@ const CardRoom = (props) => {
             <CardContent>
                 <Grid container direction="column" className={classes.mainContainer}>
 
-                    <Grid  item container  className={classes.container}>
+                    <Grid item container className={classes.container}>
 
-                        <Grid container direction="row" >
+                        <Grid container direction="row">
                             <Grid item container xs={12} sm={12} md={12} lg={12}>
 
                                 <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
 
                                     <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                        <IconTemperature/>
+                                        {celcius <= 20 ? <IconTemperature fill='#3B82F6' stroke='#000'/> :
+                                            <IconTemperature fill='red' stroke='#000'/>}
 
                                     </Grid>
                                     <Grid item xs={2} sm={2} md={2} lg={2}>
@@ -93,6 +172,8 @@ const CardRoom = (props) => {
                                             min={0}
                                             max={50}
                                             style={{textColor: "#fff"}}
+                                            onChangeCommitted={(event,value) =>updateRoomItems(roomName,"temperature") }
+
 
 
                                         />
@@ -106,7 +187,7 @@ const CardRoom = (props) => {
 
                         </Grid>
 
-                        <Grid container direction="row" style={{paddingTop:"10px"}}>
+                        <Grid container direction="row" style={{paddingTop: "10px"}}>
                             <Grid item container xs={12} sm={12} md={12} lg={12}>
 
                                 <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
@@ -123,7 +204,7 @@ const CardRoom = (props) => {
                                                 <Grid item>
                                                     <Switch
                                                         checked={stateLights}
-                                                        onChange={() => setStatelights(!stateLights)}
+                                                        onChange={() => updateRoomItems(roomName, "lights")}
                                                         color="secondary"
                                                         name="checkedB"
                                                         inputProps={{'aria-label': 'secondary checkbox'}}
@@ -142,238 +223,246 @@ const CardRoom = (props) => {
 
 
                         </Grid>
-                        {dishwasher === "open" || dishwasher === "close" ? (<Grid container direction="row" style={{paddingTop:"12px"}}>
-                            <Grid item container xs={12} sm={12} md={12} lg={12}>
+                        {dishwasher === "open" || dishwasher === "close" ? (
+                            <Grid container direction="row" style={{paddingTop: "12px"}}>
+                                <Grid item container xs={12} sm={12} md={12} lg={12}>
 
-                                <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
+                                    <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
 
-                                    <Grid item xs={2} sm={2} md={2} lg={2}>
+                                        <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                        {stateDishWasher ? <IconDishwasher fill='#3B82F6' stroke='#000'/> :
-                                            <IconDishwasher/>}
+                                            {stateDishWasher ? <IconDishwasher fill='#3B82F6' stroke='#000'/> :
+                                                <IconDishwasher/>}
 
-                                    </Grid>
-                                    <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
-                                        <Typography component="div">
-                                            <Grid component="label" container alignItems="center" spacing={1}>
-                                                <Grid item> <Typography component="div">
-                                                    Dishwasher
-                                                </Typography></Grid>
-                                                <Grid item>
-                                                    <Switch
-                                                        checked={stateDishWasher}
-                                                        onChange={() => setStateDishWasher(!stateDishWasher)}
-                                                        color="secondary"
-                                                        name="checkedB"
-                                                        inputProps={{'aria-label': 'secondary checkbox'}}
-                                                    />
+                                        </Grid>
+                                        <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
+                                            <Typography component="div">
+                                                <Grid component="label" container alignItems="center" spacing={1}>
+                                                    <Grid item> <Typography component="div">
+                                                        Dishwasher
+                                                    </Typography></Grid>
+                                                    <Grid item>
+                                                        <Switch
+                                                            checked={stateDishWasher}
+                                                            onChange={() => updateRoomItems(roomName, "dishwasher")}
+                                                            color="secondary"
+                                                            name="checkedB"
+                                                            inputProps={{'aria-label': 'secondary checkbox'}}
+                                                        />
+                                                    </Grid>
+
                                                 </Grid>
+                                            </Typography>
+                                        </Grid>
 
-                                            </Grid>
-                                        </Typography>
+
                                     </Grid>
 
 
                                 </Grid>
 
 
-                            </Grid>
+                            </Grid>) : null}
+                        {stove === "open" || stove === "close" ? (
+                            <Grid container direction="row" style={{paddingTop: "12px"}}>
+                                <Grid item container xs={12} sm={12} md={12} lg={12}>
 
+                                    <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
 
-                        </Grid>) : null}
-                        {stove === "open" || stove === "close" ? (<Grid container direction="row" style={{paddingTop:"12px"}}>
-                            <Grid item container xs={12} sm={12} md={12} lg={12}>
+                                        <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
+                                            {stateStove ? <IconStove fill='#3B82F6' stroke='#000'/> : <IconStove/>}
 
-                                    <Grid item xs={2} sm={2} md={2} lg={2}>
+                                        </Grid>
+                                        <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
+                                            <Typography component="div">
+                                                <Grid component="label" container alignItems="center" spacing={1}>
+                                                    <Grid item> <Typography component="div">
+                                                        Stove
+                                                    </Typography></Grid>
+                                                    <Grid item>
+                                                        <Switch
+                                                            checked={stateStove}
+                                                            onChange={() => updateRoomItems(roomName, "stove")}
+                                                            color="secondary"
+                                                            name="checkedB"
+                                                            inputProps={{'aria-label': 'secondary checkbox'}}
+                                                        />
+                                                    </Grid>
 
-                                        {stateStove ? <IconStove fill='#3B82F6' stroke='#000'/> : <IconStove/>}
-
-                                    </Grid>
-                                    <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
-                                        <Typography component="div">
-                                            <Grid component="label" container alignItems="center" spacing={1}>
-                                                <Grid item> <Typography component="div">
-                                                    Stove
-                                                </Typography></Grid>
-                                                <Grid item>
-                                                    <Switch
-                                                        checked={stateStove}
-                                                        onChange={() => setStateStove(!stateStove)}
-                                                        color="secondary"
-                                                        name="checkedB"
-                                                        inputProps={{'aria-label': 'secondary checkbox'}}
-                                                    />
                                                 </Grid>
+                                            </Typography>
+                                        </Grid>
 
-                                            </Grid>
-                                        </Typography>
+
                                     </Grid>
 
 
                                 </Grid>
 
 
-                            </Grid>
+                            </Grid>) : null}
+                        {washingMachine === "open" || washingMachine === "close" ? (
+                            <Grid container direction="row" style={{paddingTop: "12px"}}>
+                                <Grid item container xs={12} sm={12} md={12} lg={12}>
 
+                                    <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
 
-                        </Grid>) : null}
-                        {washingMachine === "open" || washingMachine === "close" ? (<Grid container direction="row" style={{paddingTop:"12px"}}>
-                            <Grid item container xs={12} sm={12} md={12} lg={12}>
+                                        <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
+                                            {stateWashingMachine ? <IconWashingMachine fill='#3B82F6' stroke='#000'/> :
+                                                <IconWashingMachine/>}
 
-                                    <Grid item xs={2} sm={2} md={2} lg={2}>
+                                        </Grid>
+                                        <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
+                                            <Typography component="div">
+                                                <Grid component="label" container alignItems="center" spacing={1}>
+                                                    <Grid item> <Typography component="div">
+                                                        Washing Machine
+                                                    </Typography></Grid>
+                                                    <Grid item>
+                                                        <Switch
+                                                            checked={stateWashingMachine}
+                                                            onChange={() => updateRoomItems(roomName, "washingMachine")}
+                                                            color="secondary"
+                                                            name="checkedB"
+                                                            inputProps={{'aria-label': 'secondary checkbox'}}
+                                                        />
+                                                    </Grid>
 
-                                        {stateWashingMachine ? <IconWashingMachine fill='#3B82F6' stroke='#000'/> :
-                                            <IconWashingMachine/>}
-
-                                    </Grid>
-                                    <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
-                                        <Typography component="div">
-                                            <Grid component="label" container alignItems="center" spacing={1}>
-                                                <Grid item> <Typography component="div">
-                                                    Washing Machine
-                                                </Typography></Grid>
-                                                <Grid item>
-                                                    <Switch
-                                                        checked={stateWashingMachine}
-                                                        onChange={() => setStateWashingMachine(!stateWashingMachine)}
-                                                        color="secondary"
-                                                        name="checkedB"
-                                                        inputProps={{'aria-label': 'secondary checkbox'}}
-                                                    />
                                                 </Grid>
+                                            </Typography>
+                                        </Grid>
 
-                                            </Grid>
-                                        </Typography>
+
                                     </Grid>
 
 
                                 </Grid>
 
 
-                            </Grid>
+                            </Grid>) : null}
+                        {tv === "open" || tv === "close" ? (
+                            <Grid container direction="row" style={{paddingTop: "12px"}}>
+                                <Grid item container xs={12} sm={12} md={12} lg={12}>
 
+                                    <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
 
-                        </Grid>) : null}
-                        {tv === "open" || tv === "close" ? (<Grid container direction="row" style={{paddingTop:"12px"}}>
-                            <Grid item container xs={12} sm={12} md={12} lg={12}>
+                                        <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
+                                            {stateTv ? <IconTv fill='#3B82F6' stroke='#000'/> : <IconTv/>}
 
-                                    <Grid item xs={2} sm={2} md={2} lg={2}>
+                                        </Grid>
+                                        <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
+                                            <Typography component="div">
+                                                <Grid component="label" container alignItems="center" spacing={1}>
+                                                    <Grid item> <Typography component="div">
+                                                        Tv
+                                                    </Typography></Grid>
+                                                    <Grid item>
+                                                        <Switch
+                                                            checked={stateTv}
+                                                            onChange={() => updateRoomItems(roomName, "tv")}
+                                                            color="secondary"
+                                                            name="checkedB"
+                                                            inputProps={{'aria-label': 'secondary checkbox'}}
+                                                        />
+                                                    </Grid>
 
-                                        {stateTv ? <IconTv fill='#3B82F6' stroke='#000'/> : <IconTv/>}
-
-                                    </Grid>
-                                    <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
-                                        <Typography component="div">
-                                            <Grid component="label" container alignItems="center" spacing={1}>
-                                                <Grid item> <Typography component="div">
-                                                    Tv
-                                                </Typography></Grid>
-                                                <Grid item>
-                                                    <Switch
-                                                        checked={stateTv}
-                                                        onChange={() => setStateTv(!stateTv)}
-                                                        color="secondary"
-                                                        name="checkedB"
-                                                        inputProps={{'aria-label': 'secondary checkbox'}}
-                                                    />
                                                 </Grid>
+                                            </Typography>
+                                        </Grid>
 
-                                            </Grid>
-                                        </Typography>
+
                                     </Grid>
 
 
                                 </Grid>
 
 
-                            </Grid>
+                            </Grid>) : null}
+                        {curtains === "open" || curtains === "close" ? (
+                            <Grid container direction="row" style={{paddingTop: "12px"}}>
+                                <Grid item container xs={12} sm={12} md={12} lg={12}>
 
+                                    <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
 
-                        </Grid>) : null}
-                        {curtains === "open" || curtains === "close" ? (<Grid container direction="row" style={{paddingTop:"12px"}}>
-                            <Grid item container xs={12} sm={12} md={12} lg={12}>
+                                        <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
+                                            {stateCurtains ? <IconCurtains fill='#3B82F6' stroke='#000'/> :
+                                                <IconCurtains/>}
 
-                                    <Grid item xs={2} sm={2} md={2} lg={2}>
+                                        </Grid>
+                                        <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
+                                            <Typography component="div">
+                                                <Grid component="label" container alignItems="center" spacing={1}>
+                                                    <Grid item> <Typography component="div">
+                                                        Curtains
+                                                    </Typography></Grid>
+                                                    <Grid item>
+                                                        <Switch
+                                                            checked={stateCurtains}
+                                                            onChange={() => updateRoomItems(roomName, "curtains")}
+                                                            color="secondary"
+                                                            name="checkedB"
+                                                            inputProps={{'aria-label': 'secondary checkbox'}}
+                                                        />
+                                                    </Grid>
 
-                                        {stateCurtains ? <IconCurtains fill='#3B82F6' stroke='#000'/> : <IconCurtains/>}
-
-                                    </Grid>
-                                    <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
-                                        <Typography component="div">
-                                            <Grid component="label" container alignItems="center" spacing={1}>
-                                                <Grid item> <Typography component="div">
-                                                    Curtains
-                                                </Typography></Grid>
-                                                <Grid item>
-                                                    <Switch
-                                                        checked={stateCurtains}
-                                                        onChange={() => setStateCurtains(!stateCurtains)}
-                                                        color="secondary"
-                                                        name="checkedB"
-                                                        inputProps={{'aria-label': 'secondary checkbox'}}
-                                                    />
                                                 </Grid>
+                                            </Typography>
+                                        </Grid>
 
-                                            </Grid>
-                                        </Typography>
+
                                     </Grid>
 
 
                                 </Grid>
 
 
-                            </Grid>
+                            </Grid>) : null}
+                        {door === "open" || door === "close" ? (
+                            <Grid container direction="row" style={{paddingTop: "12px"}}>
+                                <Grid item container xs={12} sm={12} md={12} lg={12}>
 
+                                    <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
 
-                        </Grid>) : null}
-                        {door === "open" || door === "close" ? (<Grid container direction="row" style={{paddingTop:"12px"}}>
-                            <Grid item container xs={12} sm={12} md={12} lg={12}>
+                                        <Grid item xs={2} sm={2} md={2} lg={2}>
 
-                                <Grid container direction="row" xs={12} sm={12} md={12} lg={12}>
+                                            {stateGarageDoor ? <IconGarage fill='#3B82F6' stroke='#000'/> :
+                                                <IconGarage/>}
 
-                                    <Grid item xs={2} sm={2} md={2} lg={2}>
+                                        </Grid>
+                                        <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
+                                            <Typography component="div">
+                                                <Grid component="label" container alignItems="center" spacing={1}>
+                                                    <Grid item>
+                                                        <Typography component="div">
+                                                            Door
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <Switch
+                                                            checked={stateGarageDoor}
+                                                            onChange={() => updateRoomItems(roomName, "door")}
+                                                            color="secondary"
+                                                            name="checkedB"
+                                                            inputProps={{'aria-label': 'secondary checkbox'}}
+                                                        />
+                                                    </Grid>
 
-                                        <IconGarage/>
-
-                                    </Grid>
-                                    <Grid item container direction="row" xs={10} sm={10} md={10} lg={10}>
-                                        <Typography component="div">
-                                            <Grid component="label" container alignItems="center" spacing={1}>
-                                                <Grid item>
-                                                    <Typography component="div">
-                                                        Door
-                                                    </Typography>
                                                 </Grid>
-                                                <Grid item>
-                                                    <Switch
-                                                        checked={stateGarageDoor}
-                                                        onChange={() => setStateGarageDoor(!stateGarageDoor)}
-                                                        color="secondary"
-                                                        name="checkedB"
-                                                        inputProps={{'aria-label': 'secondary checkbox'}}
-                                                    />
-                                                </Grid>
+                                            </Typography>
+                                        </Grid>
 
-                                            </Grid>
-                                        </Typography>
+
                                     </Grid>
 
 
                                 </Grid>
 
 
-                            </Grid>
-
-
-                        </Grid>) : null}
+                            </Grid>) : null}
 
 
                     </Grid>

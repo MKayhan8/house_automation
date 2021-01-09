@@ -6,6 +6,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import GraphContainer from "../components/GraphContainer";
 import Progress from "../components/Progress";
 import axios from "axios";
+import {getRoom} from "../services/API";
 
 const useStyles = makeStyles((theme) => ({
     div: {
@@ -32,16 +33,14 @@ const Bathroom = () => {
     const color_array = ["#2196f3", "#f50057"]
     const unit_array = ["Kwh", "°C"]
 
-    const getApiData = async () => {
-        await axios.get("http://localhost:3000/rooms").then(res => {
-            const dataObj = res.data.find(v => v.roomName === "Bathroom")
-            setData_array([dataObj.powerWeekly, dataObj.temperatureWeekly])
-            setData_array([dataObj.powerWeekly, dataObj.temperatureWeekly])
-            setLoading(false)
-        }).catch(err => {
-            console.log(err)
+    const getApiData = () => {
+        getRoom("Bathroom").then(res => {
+                setData_array([res.data.powerWeekly, res.data.temperatureWeekly])
+                setLoading(false)
+            }
+        ).catch((e) => {
+            alert(e)
         })
-
     }
 
     useEffect(() => {
